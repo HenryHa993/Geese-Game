@@ -52,7 +52,6 @@ public class GenerateBoard : MonoBehaviour
                 for (int i = 0; i < numNodes; i++)
                 {
                     pointArray[j - 1, i].GetComponent<Point>().parent = origin;
-                    pointArray[j - 1, i].GetComponent<Point>().sidePosition = i;
                     pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
                     pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
 
@@ -84,7 +83,6 @@ public class GenerateBoard : MonoBehaviour
                     // Sibling should be on end of array if i = 0
                     for (int i = 0; i < numNodes; i++)
                     {
-                        pointArray[j - 1, i].GetComponent<Point>().sidePosition = i;
                         pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
                         pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
 
@@ -112,7 +110,6 @@ public class GenerateBoard : MonoBehaviour
                     // Sibling should be on end of array if i = 0
                     for (int i = 0; i < numNodes; i++)
                     {
-                        pointArray[j - 1, i].GetComponent<Point>().sidePosition = i;
                         if (i == 0)
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
@@ -141,8 +138,7 @@ public class GenerateBoard : MonoBehaviour
                 {
                     // Last layer
                     // Only assign siblings
-                    pointArray[j - 1, i].GetComponent<Point>().sidePosition = i;
-                    if (j == layers)
+                    if(j == layers)
                     {
                         if (i == 0)
                         {
