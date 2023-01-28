@@ -44,10 +44,7 @@ public class GenerateEnemies : MonoBehaviour
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
                 enemy.updateMoveScores();
                 int index =  System.Array.IndexOf(enemy.moveScores, enemy.moveScores.Min());
-                Debug.Log("Scores parent:" + enemy.moveScores[0] );
-                Debug.Log("Scores child:" + enemy.moveScores[1] );
-                Debug.Log("Scores sibling:" + enemy.moveScores[2] );
-                Debug.Log("!!!!Index:" + index );
+                
 
 
 

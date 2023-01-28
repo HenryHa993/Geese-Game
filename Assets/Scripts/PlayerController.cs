@@ -58,13 +58,13 @@ public class PlayerController : MonoBehaviour
                     transform.LookAt(position);
                 }
 
-
                 bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
+                if(targetNodeData.layer < 0) clockwiseLayer = true;
+
                 if(Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     if(lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0) //not a bad sibling
                     {
-                        Debug.Log("Move Made");
                         targetNode = GetLookedAtNode();
                         targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
                         currentNode = targetNode;
@@ -73,9 +73,11 @@ public class PlayerController : MonoBehaviour
                     }
                 } else if (Input.GetKeyDown(KeyCode.RightArrow))
                 { 
+                    Debug.Log("Turn made");
                     lookingAtNode = clockwiseLayer ? lookingAtNode + 1: lookingAtNode - 1;
                 } else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 { 
+                    Debug.Log("Turn made");
                     lookingAtNode = clockwiseLayer ? lookingAtNode - 1: lookingAtNode + 1;
                 }
             }
