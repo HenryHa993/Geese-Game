@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject targetNode;
+    public GameObject currentNode, targetNode;
     public float playerSpeed;
     public int movesToMake;
     public bool isTurn;
@@ -18,10 +18,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentPosition = transform.localPosition;
+        targetNodeData = targetNode.GetComponent<Point>();
+        currentPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
         targetPosition = currentPosition;
         timer = 0;
         lookingAtNode = 2;
+        var p1 = transform.position;
+                    var p2 = GetLookedAtNode().transform.position;
+                    var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
+                    transform.LookAt(position);
     }
 
     // Update is called once per frame
@@ -39,7 +44,6 @@ public class PlayerController : MonoBehaviour
                 timer = 0;
                 if(targetNode != null)
                 {
-                    targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
                 }
 
                 if (GetLookedAtNode() != null)
@@ -49,7 +53,7 @@ public class PlayerController : MonoBehaviour
                     var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
                     transform.LookAt(position);
                 }
-                
+
 
                 bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
                 if(Input.GetKeyDown(KeyCode.UpArrow))
@@ -58,6 +62,8 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log("Move Made");
                         targetNode = GetLookedAtNode();
+                        targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
+                        currentNode = targetNode;
                         movesToMake--;
                     }
                 } else if (Input.GetKeyDown(KeyCode.RightArrow))
