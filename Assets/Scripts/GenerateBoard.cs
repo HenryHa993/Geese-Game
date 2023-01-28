@@ -1,11 +1,12 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GenerateBoard : MonoBehaviour
 {
     public GameObject origin;
-    public GameObject point, player;
+    public GameObject point, player, enemies;
 
     public int layers = 1;
     public int numNodes = 4;
@@ -185,7 +186,8 @@ public class GenerateBoard : MonoBehaviour
 
 
         //assign starting node to player
-        player.GetComponent<PlayerController>().targetNode = pointArray[1,1];
+        player.GetComponent<PlayerController>().targetNode = pointArray[0,0];
+        enemies.GetComponent<GenerateEnemies>().outerLayerNode = pointArray[layers-1,0];
     }
 
     
