@@ -5,7 +5,7 @@ using UnityEngine;
 public class GenerateBoard : MonoBehaviour
 {
     public GameObject origin;
-    public GameObject point;
+    public GameObject point, player;
 
     public int layers = 1;
     public int numNodes = 4;
@@ -184,8 +184,11 @@ public class GenerateBoard : MonoBehaviour
 
 
 
-
+        //assign starting node to player
+        player.GetComponent<PlayerController>().targetNode = pointArray[1,1];
     }
+
+    
 
 
 
