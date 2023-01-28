@@ -40,32 +40,41 @@ public class GenerateBoard : MonoBehaviour
         //Debug.Log(pointArray);
         //Print2DArray(pointArray);
 
-        // Assign parents, children and siblings
+        // Traverse through 2D array to assign relationships
         for (int j = 1; j <= layers; j++)
         {
-            // If layer == 1, origin is their parent
-            // ANTICLOCKWISE
+            // FIRST LAYER
+            // Assign parent to origin, its child
+            // ANTICLOCKWISE R->L
             if (j == 1)
             {
-                for(int i = 0; i < numNodes; i++)
+                for (int i = 0; i < numNodes; i++)
                 {
                     pointArray[j - 1, i].GetComponent<Point>().parent = origin;
                     pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
+                    pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
 
                     if (i == 0)
                     {
                         pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
+                        pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
+                    }
+                    else if(i == numNodes - 1)
+                    {
+                        pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Same layer, end of array
+                        pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, 0];
                     }
                     else
                     {
                         pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Point on left
+                        pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
                     }
                 }
             }
 
-            // If odd layer, sibling is in anticlockwise direction
-            // ANTICLOCKWISE
-            if(j % 2 != 0 && j > 1)
+            // Odd
+            // ANTICLOCKWISE in array
+            if (j % 2 != 0 && j > 1)
             {
                 // Mid layer
                 if (j < layers)
@@ -73,16 +82,23 @@ public class GenerateBoard : MonoBehaviour
                     // Sibling should be on end of array if i = 0
                     for (int i = 0; i < numNodes; i++)
                     {
-                        pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same pos
-                        pointArray[j - 1, i].GetComponent<Point>().parent = pointArray[j - 2, i]; // Prev layer, same pos
+                        pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
+                        pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
 
                         if (i == 0)
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
+                        }
+                        else if (i == numNodes - 1)
+                        {
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, 0];
                         }
                         else
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
                         }
                     }
                 }
@@ -93,71 +109,80 @@ public class GenerateBoard : MonoBehaviour
                     // Sibling should be on end of array if i = 0
                     for (int i = 0; i < numNodes; i++)
                     {
-                        // DONT ASSIGN PARENT
-                        //pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same pos
-                        pointArray[j - 1, i].GetComponent<Point>().parent = pointArray[j - 2, i]; // Prev layer, same pos
-
                         if (i == 0)
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
+                        }
+                        else if (i == numNodes - 1)
+                        {
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, 0];
                         }
                         else
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
                         }
                     }
                 }
 
             }
 
-            // Even cases
-            // CLOCKWISE
+
+            // EVEN L -> R CLOCKWISE
             if (j % 2 == 0 && j > 1)
             {
-                // Mid layer
-                if (j < layers)
+                for (int i = 0; i < numNodes; i++)
                 {
-                    // Sibling should be on end of array if i = 0
-                    for (int i = 0; i < numNodes; i++)
+                    // Last layer
+                    // Only assign siblings
+                    if(j == layers)
                     {
-                        pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same pos
-                        pointArray[j - 1, i].GetComponent<Point>().parent = pointArray[j - 2, i]; // Prev layer, same pos
-
-                        if (i == numNodes - 1)
+                        if (i == 0)
                         {
-                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, 0]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1];
+                        }
+                        else if (i == numNodes - 1)
+                        {
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, 0]; // Point on left
                         }
                         else
                         {
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Point on left
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1]; // Point on left
                         }
                     }
-                }
-
-                // End layer
-                if (j == layers)
-                {
-                    // Sibling should be on end of array if i = 0
-                    for (int i = 0; i < numNodes; i++)
+                    else // Mid layer
                     {
-                        // DONT ASSIGN PARENT
-                        //pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same pos
-                        pointArray[j - 1, i].GetComponent<Point>().parent = pointArray[j - 2, i]; // Prev layer, same pos
+                        pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
+                        pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
 
-                        if (i == numNodes - 1)
+                        if (i == 0)
                         {
-                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, 0]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1];
+                        }
+                        else if (i == numNodes - 1)
+                        {
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Same layer, end of array
+                            pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, 0]; // Point on left
                         }
                         else
                         {
+                            pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Point on left
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1]; // Point on left
                         }
+
                     }
                 }
-
             }
 
         }
+
+
 
 
     }
