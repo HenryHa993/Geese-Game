@@ -21,11 +21,6 @@ public class Enemy : MonoBehaviour
         genScript = generateBoard.GetComponent<GenerateBoard>();
     }
 
-    public void updatePossibleMoves()
-    {
-        playerPoint = player.GetComponent<Point>();
-        possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
-    }
 
     public void updateMoveScores()
     {
@@ -34,28 +29,36 @@ public class Enemy : MonoBehaviour
 
         }*/
 
+        moveScores = new int[3]{100, 100, 100};
+        playerPoint = player.GetComponent<Point>();
+        genScript = generateBoard.GetComponent<GenerateBoard>();
+        possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
+
         for (int i= 0; i < moveScores.Length; i++)
         {
-            moveScores[i] = getScore(possibleMoves[i]);
+            moveScores[i] = getScoreNew(possibleMoves[i], player, generateBoard);
         }
     }
 
-    public int getScore(GameObject move)
+    private static int getScoreNew(GameObject move, GameObject player, GameObject generateBoard)
+    {
+        if (move == null) //shouldn't make move
         {
-        Point pointScript = move.GetComponent<Point>();
-        //GameObject[,] pointArray = genScript.pointArray;
-        int score = 100;
+            return 100;
+        } 
 
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        Point playerPoint = playerController.currentNode.GetComponent<Point>();
+        Point pointScript = move.GetComponent<Point>();
+        GenerateBoard genScript = generateBoard.GetComponent<GenerateBoard>();
+        int score = 0;
         if(pointScript.isOccupiedBy != null)
         {
             return 100;
         }
+        
 
-        if (isBlocking)
-        {
-            return 100;
-        }
-
+        
         // Calculate score
         // Count layer difference (take positive)
         if(pointScript.layer < playerPoint.layer)
@@ -66,6 +69,7 @@ public class Enemy : MonoBehaviour
         {
             score += pointScript.layer - playerPoint.layer;
         }
+
 
         // Count number of side turns
         if(pointScript.sidePosition > genScript.numNodes / 2 && playerPoint.sidePosition > genScript.numNodes / 2)
@@ -89,6 +93,9 @@ public class Enemy : MonoBehaviour
             score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
         }
 
+
         return score;
-    }
+    } 
+
+    
 }

@@ -42,18 +42,14 @@ public class GenerateEnemies : MonoBehaviour
             foreach (GameObject enemyObject in enemyArray)
             {
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
-                enemy.updatePossibleMoves();
                 enemy.updateMoveScores();
-                //int index = enemy.moveScores.Min();
-                Debug.Log("Scores 0:" + enemy.moveScores[0] );
-                Debug.Log("Scores 1:" + enemy.moveScores[1] );
-                Debug.Log("Scores 2:" + enemy.moveScores[2] );
+                int index =  System.Array.IndexOf(enemy.moveScores, enemy.moveScores.Min());
+                Debug.Log("Scores parent:" + enemy.moveScores[0] );
+                Debug.Log("Scores child:" + enemy.moveScores[1] );
+                Debug.Log("Scores sibling:" + enemy.moveScores[2] );
+                Debug.Log("!!!!Index:" + index );
 
-                int index = 0;
-                // if(enemy.moveScores[0] >= enemy.moveScores[1] && enemy.moveScores[0] >= enemy.moveScores[2]) index = 0;
-                // if(enemy.moveScores[1] >= enemy.moveScores[0] && enemy.moveScores[1] >= enemy.moveScores[2]) index = 1;
-                // if(enemy.moveScores[2] >= enemy.moveScores[0] && enemy.moveScores[2] >= enemy.moveScores[1]) index = 2;
-                // Debug.Log("Scores:" + enemy.moveScores[0] + enemy.moveScores[1] + enemy.moveScores[2]);
+
 
                 GameObject newNode = enemy.possibleMoves[index];
                 enemy.transform.position = newNode.transform.position;
