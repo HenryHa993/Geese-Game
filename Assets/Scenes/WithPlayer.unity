@@ -170,7 +170,7 @@ MonoBehaviour:
   origin: {fileID: 1169635157}
   point: {fileID: 2951005293857694701, guid: b6815e2ba9ef2a744a5885547c9f9c5f, type: 3}
   player: {fileID: 1726790533}
-  enemies: {fileID: 0}
+  enemies: {fileID: 351760279}
   layers: 4
   numNodes: 10
   radius: 2
@@ -218,10 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e48d813bfa09c549956346b7b1b6184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numEnemies: 4
-  enemy: {fileID: 0}
+  Enemy: {fileID: 6389240085919280758, guid: 217522485fa7fa744bfa9c8072755d74, type: 3}
+  outerLayerNode: {fileID: 0}
   enemyArray: []
-  outerLayerArray: []
+  isTurn: 0
+  numEnemies: 5
 --- !u!1 &414449416
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +805,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319376707}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1477598346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1477598348}
+  - component: {fileID: 1477598347}
+  m_Layer: 0
+  m_Name: GameControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1477598347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477598346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3638f96115c44a5419f661ef1a8bbee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: {fileID: 351760279}
+  player: {fileID: 1726790533}
+  playerMovesThisTurn: 2
+  isPlayersTurn: 0
+--- !u!4 &1477598348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477598346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7138959, y: 0.55976534, z: 0.009945989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1726790533
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +884,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetNode: {fileID: 0}
   playerSpeed: 0.1
+  movesToMake: 0
+  isTurn: 0
 --- !u!4 &1726790535
 Transform:
   m_ObjectHideFlags: 0
