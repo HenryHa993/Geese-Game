@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
                 }
 
                 bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
-                if(targetNodeData.layer < 0) clockwiseLayer = true;
 
                 if(Input.GetKeyDown(KeyCode.UpArrow))
                 {
@@ -75,10 +74,13 @@ public class PlayerController : MonoBehaviour
                 { 
                     Debug.Log("Turn made");
                     lookingAtNode = clockwiseLayer ? lookingAtNode + 1: lookingAtNode - 1;
+                    if(lookingAtNode <= -1) lookingAtNode = 3;
                 } else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 { 
                     Debug.Log("Turn made");
                     lookingAtNode = clockwiseLayer ? lookingAtNode - 1: lookingAtNode + 1;
+                    if(lookingAtNode <= -1) lookingAtNode = 3;
+
                 }
             }
         
@@ -92,12 +94,16 @@ public class PlayerController : MonoBehaviour
         switch (lookingAtNode % 4)
         {
             case 1:
+                lookingAtNode = 1;
                 return targetNodeData.sibling;
             case 2:
+                lookingAtNode = 2;
                 return targetNodeData.child;
             case 3:
+                lookingAtNode = 3;
                 return targetNodeData.badSibling;
             default:
+                lookingAtNode = 0;
                 return targetNodeData.parent;
         }
 
