@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     public void updatePossibleMoves()
     {
+        playerPoint = player.GetComponent<Point>();
         possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
     }
 
