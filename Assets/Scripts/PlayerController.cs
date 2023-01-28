@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if(lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0) //not a bad sibling
                     {
+                        Debug.Log("Move Made");
                         targetNode = GetLookedAtNode();
                         movesToMake--;
                     }
