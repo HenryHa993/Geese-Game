@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerateEnemies : MonoBehaviour
 {
-    public GameObject Enemy, outerLayerNode;
+    public GameObject Enemy, outerLayerNode, player, generateBoard;
     public GameObject[] enemyArray;
     public bool isTurn, movesMade;
     public int numEnemies = 5;
@@ -15,14 +15,18 @@ public class GenerateEnemies : MonoBehaviour
         if (!(outerLayerNode == null))
         {
             enemyArray = new GameObject[numEnemies];
-            Point currentNode = outerLayerNode.GetComponent<Point>();
+            GameObject currentNode = outerLayerNode;
             for (int i = 0; i < numEnemies; i++)
             {
                 Vector3 initPosition = currentNode.transform.position;
                 Quaternion initRotation = Quaternion.Euler(0, 0, 0);
                 enemyArray[i] = Instantiate(Enemy, initPosition, initRotation);
-                
-                currentNode = currentNode.sibling.GetComponent<Point>().sibling.GetComponent<Point>();
+                Enemy enemy = enemyArray[i].GetComponent<Enemy>();
+                enemy.player = player;
+                enemy.generateBoard = generateBoard;
+                enemy.entityNode = currentNode;
+
+                currentNode = currentNode.GetComponent<Point>().sibling.GetComponent<Point>().sibling;
             }
         }
         
