@@ -220,6 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 6389240085919280758, guid: 217522485fa7fa744bfa9c8072755d74, type: 3}
   outerLayerNode: {fileID: 0}
+  player: {fileID: 1726790533}
+  generateBoard: {fileID: 189290977}
   enemyArray: []
   isTurn: 0
   movesMade: 0
@@ -611,10 +613,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: 0
+  sidePosition: 0
   child: {fileID: 0}
   parent: {fileID: 0}
   sibling: {fileID: 0}
   badSibling: {fileID: 0}
+  isOccupiedBy: {fileID: 0}
 --- !u!108 &1169635160
 Light:
   m_ObjectHideFlags: 0
