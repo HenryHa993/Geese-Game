@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    // Player tracking
     public GameObject player;
     public Point playerPoint;
+
+    // Track entityNode
     public GameObject entityNode;
+
+    // Checks is blocking player TODO
     public bool isBlocking;
 
+    // To get number of nodes
     public GameObject generateBoard;
     public GenerateBoard genScript;
 
-    public GameObject[] possibleMoves;// = new GameObject[3];
+    // Possible moves and their corresponding move scores
+    public GameObject[] possibleMoves;
     public int[] moveScores;
 
     private void Start()
     {
         playerPoint = player.GetComponent<Point>();
         genScript = generateBoard.GetComponent<GenerateBoard>();
+
+        moveScores = new int[3];
+        possibleMoves = new GameObject[3];
+
+        isBlocking = false;
     }
 
     public void updatePossibleMoves()
@@ -29,22 +41,22 @@ public class Enemy : MonoBehaviour
 
     public void updateMoveScores()
     {
-/*        foreach (GameObject move in possibleMoves)
-        {
-
-        }*/
-
+        // Updates score array
         for (int i= 0; i < moveScores.Length; i++)
         {
-            moveScores[i] = getScore(possibleMoves[i]);
+            int dasscore = getScore(possibleMoves[i]);
+            moveScores[i] = dasscore;
+            Debug.Log(moveScores[i] );
         }
     }
 
+    // Get score for each move
+    // Lower score means better for getting closer to player
     public int getScore(GameObject move)
         {
         Point pointScript = move.GetComponent<Point>();
         //GameObject[,] pointArray = genScript.pointArray;
-        int score = 100;
+        int score = 0;
 
         if(pointScript.isOccupiedBy != null)
         {
@@ -76,13 +88,14 @@ public class Enemy : MonoBehaviour
         {
             score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
         }
+
         else if (pointScript.sidePosition - playerPoint.sidePosition > genScript.numNodes / 2)
         {
-            score += pointScript.sidePosition - (playerPoint.sidePosition + genScript.numNodes / 2);
+            score += Mathf.Abs(pointScript.sidePosition - (playerPoint.sidePosition + genScript.numNodes));
         }
         else if (pointScript.sidePosition - playerPoint.sidePosition < - genScript.numNodes / 2)
         {
-            score += pointScript.sidePosition - (playerPoint.sidePosition - genScript.numNodes / 2);
+            score += Mathf.Abs(pointScript.sidePosition - (playerPoint.sidePosition - genScript.numNodes));
         }
         else
         {

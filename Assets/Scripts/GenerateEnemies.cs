@@ -17,11 +17,16 @@ public class GenerateEnemies : MonoBehaviour
         {
             enemyArray = new GameObject[numEnemies];
             GameObject currentNode = outerLayerNode;
+
+            // Generate enemies
             for (int i = 0; i < numEnemies; i++)
             {
+                // Instantiate objects to array
                 Vector3 initPosition = currentNode.transform.position;
                 Quaternion initRotation = Quaternion.Euler(0, 0, 0);
                 enemyArray[i] = Instantiate(Enemy, initPosition, initRotation);
+
+                // Assign ene
                 Enemy enemy = enemyArray[i].GetComponent<Enemy>();
                 enemy.player = player;
                 enemy.generateBoard = generateBoard;
@@ -55,6 +60,7 @@ public class GenerateEnemies : MonoBehaviour
                 // if(enemy.moveScores[2] >= enemy.moveScores[0] && enemy.moveScores[2] >= enemy.moveScores[1]) index = 2;
                 // Debug.Log("Scores:" + enemy.moveScores[0] + enemy.moveScores[1] + enemy.moveScores[2]);
 
+                // Move to new selected node
                 GameObject newNode = enemy.possibleMoves[index];
                 enemy.transform.position = newNode.transform.position;
                 enemy.entityNode = newNode;

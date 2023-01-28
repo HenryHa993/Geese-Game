@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
+    // Determines win/lose conditions
+    // Determines time
     public GameObject enemies, player;
+
     public int playerMovesThisTurn = 2;
     public bool isPlayersTurn;
-    // Start is called before the first frame update
+
     void Start()
     {
         isPlayersTurn = true;
@@ -15,7 +18,7 @@ public class GameControl : MonoBehaviour
         enemies.GetComponent<GenerateEnemies>().movesMade = false;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
@@ -24,6 +27,7 @@ public class GameControl : MonoBehaviour
             enemies.GetComponent<GenerateEnemies>().movesMade = false;
             player.GetComponent<PlayerController>().movesToMake = playerMovesThisTurn;
         }
+
         isPlayersTurn = player.GetComponent<PlayerController>().movesToMake >= 1;
         
         player.GetComponent<PlayerController>().isTurn = isPlayersTurn;
