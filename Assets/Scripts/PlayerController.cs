@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject currentNode, targetNode;
+    public Text movesLeftText;
     public float playerSpeed;
     public int movesToMake;
     public bool isTurn;
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
                 transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, timer);
             }else if(isTurn) //at a node
             {
+                movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
                 timer = 0;
                 if(targetNode != null)
                 {
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour
                         targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
                         currentNode = targetNode;
                         movesToMake--;
+                        movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
                     }
                 } else if (Input.GetKeyDown(KeyCode.RightArrow))
                 { 
