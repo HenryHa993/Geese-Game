@@ -85,7 +85,7 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition));
+            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
         }
 
         return score;

@@ -39,22 +39,21 @@ public class GenerateEnemies : MonoBehaviour
         if (isTurn)
         {
             //move enemies
-            foreach (GameObject enemyObject in enemyArray)
+            System.Random rand = new System.Random();
+            int numMoved = rand.Next(numEnemies);
+
+            for (int i = 0; i < numMoved; i++)
             {
-                Enemy enemy = enemyObject.GetComponent<Enemy>();
+                Enemy enemy = enemyArray[i].GetComponent<Enemy>();
                 enemy.updateMoveScores();
                 int index =  System.Array.IndexOf(enemy.moveScores, enemy.moveScores.Min());
-                Debug.Log("Scores parent:" + enemy.moveScores[0] );
-                Debug.Log("Scores child:" + enemy.moveScores[1] );
-                Debug.Log("Scores sibling:" + enemy.moveScores[2] );
-                Debug.Log("!!!!Index:" + index );
+                
 
 
 
                 GameObject newNode = enemy.possibleMoves[index];
                 enemy.transform.position = newNode.transform.position;
                 enemy.entityNode = newNode;
-                
             }
             movesMade = true;
         }
