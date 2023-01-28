@@ -45,15 +45,19 @@ public class GenerateEnemies : MonoBehaviour
                 enemy.updatePossibleMoves();
                 enemy.updateMoveScores();
                 //int index = enemy.moveScores.Min();
-                if (enemy.possibleMoves != null)
-                {
-                    GameObject newNode = enemy.possibleMoves[0];
-                    enemy.transform.position = newNode.transform.position;
-                    enemy.entityNode = newNode;
-                }else
-                {
-                    Debug.Log("No moves possible...");
-                }
+                Debug.Log("Scores 0:" + enemy.moveScores[0] );
+                Debug.Log("Scores 1:" + enemy.moveScores[1] );
+                Debug.Log("Scores 2:" + enemy.moveScores[2] );
+
+                int index = 0;
+                // if(enemy.moveScores[0] >= enemy.moveScores[1] && enemy.moveScores[0] >= enemy.moveScores[2]) index = 0;
+                // if(enemy.moveScores[1] >= enemy.moveScores[0] && enemy.moveScores[1] >= enemy.moveScores[2]) index = 1;
+                // if(enemy.moveScores[2] >= enemy.moveScores[0] && enemy.moveScores[2] >= enemy.moveScores[1]) index = 2;
+                // Debug.Log("Scores:" + enemy.moveScores[0] + enemy.moveScores[1] + enemy.moveScores[2]);
+
+                GameObject newNode = enemy.possibleMoves[index];
+                enemy.transform.position = newNode.transform.position;
+                enemy.entityNode = newNode;
                 
             }
             movesMade = true;
