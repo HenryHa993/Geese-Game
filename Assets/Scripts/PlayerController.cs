@@ -40,15 +40,19 @@ public class PlayerController : MonoBehaviour
                 targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
             }
 
-            var p1 = transform.position;
-            var p2 = GetLookedAtNode().transform.position;
-            var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
-            transform.LookAt(position);
+            if (GetLookedAtNode() != null)
+            {
+                var p1 = transform.position;
+                var p2 = GetLookedAtNode().transform.position;
+                var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
+                transform.LookAt(position);
+            }
+            
 
             bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if(lookingAtNode % 4 != 3) //not a bad sibling
+                if(lookingAtNode % 4 != 3 && GetLookedAtNode() != null) //not a bad sibling
                 {
                     targetNode = GetLookedAtNode();
                 }
