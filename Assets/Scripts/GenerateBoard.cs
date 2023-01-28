@@ -13,7 +13,7 @@ public class GenerateBoard : MonoBehaviour
 
     public GameObject[,] pointArray;
 
-    private void Start()
+    private void Awake()
     {
         // Save points in an array
         pointArray = new GameObject[layers, numNodes];
