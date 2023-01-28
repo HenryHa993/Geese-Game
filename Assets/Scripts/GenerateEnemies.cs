@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GenerateEnemies : MonoBehaviour
@@ -41,7 +42,19 @@ public class GenerateEnemies : MonoBehaviour
             foreach (GameObject enemyObject in enemyArray)
             {
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
-                enemy.transform.position = new Vector3(enemy.transform.position.x + 1f, enemy.transform.position.y, enemy.transform.position.z);
+                enemy.updatePossibleMoves();
+                enemy.updateMoveScores();
+                //int index = enemy.moveScores.Min();
+                if (enemy.possibleMoves != null)
+                {
+                    GameObject newNode = enemy.possibleMoves[0];
+                    enemy.transform.position = newNode.transform.position;
+                    enemy.entityNode = newNode;
+                }else
+                {
+                    Debug.Log("No moves possible...");
+                }
+                
             }
             movesMade = true;
         }
