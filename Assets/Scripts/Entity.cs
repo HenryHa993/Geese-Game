@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Entity : MonoBehaviour
 {
     public GameObject player;
     public Point playerPoint;
@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
 
     public void updatePossibleMoves()
     {
-        playerPoint = player.GetComponent<Point>();
         possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
     }
 
@@ -41,7 +40,7 @@ public class Enemy : MonoBehaviour
     }
 
     public int getScore(GameObject move)
-        {
+    {
         Point pointScript = move.GetComponent<Point>();
         //GameObject[,] pointArray = genScript.pointArray;
         int score = 100;
@@ -86,7 +85,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
+            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition));
         }
 
         return score;
