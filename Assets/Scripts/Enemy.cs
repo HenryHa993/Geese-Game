@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         genScript = generateBoard.GetComponent<GenerateBoard>();
     }
 
-    // Initialise scores, larger scores are worse
+    // Initialise scores, larger scores are worse.
     public void updateMoveScores()
     {
 /*        foreach (GameObject move in possibleMoves)
