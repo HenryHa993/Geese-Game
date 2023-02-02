@@ -18,77 +18,61 @@ public class PlayerController : MonoBehaviour
     private Point targetNodeData;
 
 
-    // Start is called before the first frame update
+    // Initialise initial player position
     void Start()
     {
+        // Position and set camera view of player
         targetNodeData = targetNode.GetComponent<Point>();
         currentPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
         targetPosition = currentPosition;
-        timer = 0;
         lookingAtNode = 2;
-        var p1 = transform.position;
-                    var p2 = GetLookedAtNode().transform.position;
-                    var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
-                    transform.LookAt(position);
+        lookAtNode();
+
+        // Set timer
+        timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+            // Timer increments
             timer += Time.deltaTime * playerSpeed;
+
+            // Refresh target node component and current position each frame
             targetNodeData = targetNode.GetComponent<Point>();
             currentPosition = transform.localPosition;
 
-            if(currentPosition != targetPosition) //not at node
+            // Not at node, movement
+            if(currentPosition != targetPosition)
             {
                 transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, timer);
-            }else if(isTurn) //at a node
+            }
+            // If players turn, while stationary at node
+            else if(isTurn)
             {
+                // UI
                 movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+
                 timer = 0;
+
+                // What is this for?
                 if(targetNode != null)
                 {
                 }
 
+                // Update player camera view
                 if (GetLookedAtNode() != null)
                 {
-                    var p1 = transform.position;
-                    var p2 = GetLookedAtNode().transform.position;
-                    var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
-                    transform.LookAt(position);
+                    lookAtNode();
                 }
 
-                bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
-
-                if(Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    if(lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0) //not a bad sibling
-                    {
-                        targetNode = GetLookedAtNode();
-                        targetPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
-                        currentNode = targetNode;
-                        movesToMake--;
-                        movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
-                    }
-                } else if (Input.GetKeyDown(KeyCode.RightArrow))
-                { 
-                    Debug.Log("Turn made");
-                    lookingAtNode = clockwiseLayer ? lookingAtNode + 1: lookingAtNode - 1;
-                    if(lookingAtNode <= -1) lookingAtNode = 3;
-                } else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                { 
-                    Debug.Log("Turn made");
-                    lookingAtNode = clockwiseLayer ? lookingAtNode - 1: lookingAtNode + 1;
-                    if(lookingAtNode <= -1) lookingAtNode = 3;
-
-                }
+                // Player input is below
+                playerInput();
             }
-        
-
-        //rotate camera
         
     }
 
+    // Helper function to differentiate traversable nodes
     private GameObject GetLookedAtNode()
     {
         switch (lookingAtNode % 4)
@@ -107,5 +91,51 @@ public class PlayerController : MonoBehaviour
                 return targetNodeData.parent;
         }
 
+    }
+
+    public void lookAtNode()
+    {
+        var p1 = transform.position;
+        var p2 = GetLookedAtNode().transform.position;
+        var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
+        transform.LookAt(position);
+    }
+
+    public void playerInput()
+    {
+        bool clockwiseLayer = (targetNodeData.layer) % 2 == 0;
+
+        // Player input
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0 && GetLookedAtNode().GetComponent<Point>().isOccupiedBy == null) //not a bad sibling
+            {
+                // I ADDED THE BLOCK DETECTION HERE
+                targetNode = GetLookedAtNode();
+                targetNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
+
+                targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
+                currentNode = targetNode;
+                currentNode.GetComponent<Point>().isOccupiedBy = null;
+
+                movesToMake--;
+                movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+
+                // Update isOccupiedBy
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            Debug.Log("Turn made");
+            lookingAtNode = clockwiseLayer ? lookingAtNode + 1 : lookingAtNode - 1;
+            if (lookingAtNode <= -1) lookingAtNode = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Debug.Log("Turn made");
+            lookingAtNode = clockwiseLayer ? lookingAtNode - 1 : lookingAtNode + 1;
+            if (lookingAtNode <= -1) lookingAtNode = 3;
+
+        }
     }
 }

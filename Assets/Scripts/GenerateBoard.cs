@@ -183,9 +183,7 @@ public class GenerateBoard : MonoBehaviour
 
         }
 
-
-
-        //assign starting node to player
+        // Assign starting node for player (testing) and outernodes for enemies
         player.GetComponent<PlayerController>().targetNode = pointArray[0,0];
         enemies.GetComponent<GenerateEnemies>().outerLayerNode = pointArray[layers-1,0];
     }

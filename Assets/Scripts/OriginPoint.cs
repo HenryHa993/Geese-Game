@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// OriginPoint Class
 public class OriginPoint : MonoBehaviour
 {
     public GameObject[,] pointArray;

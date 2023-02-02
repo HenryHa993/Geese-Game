@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public GameObject player;
     public Point playerPoint;
+
     public GameObject entityNode;
     public bool isBlocking;
 
@@ -21,7 +22,7 @@ public class Enemy : MonoBehaviour
         genScript = generateBoard.GetComponent<GenerateBoard>();
     }
 
-
+    // Initialise scores, larger scores are worse.
     public void updateMoveScores()
     {
 /*        foreach (GameObject move in possibleMoves)
@@ -30,8 +31,8 @@ public class Enemy : MonoBehaviour
         }*/
 
         moveScores = new int[3]{100, 100, 100};
-        playerPoint = player.GetComponent<Point>();
-        genScript = generateBoard.GetComponent<GenerateBoard>();
+        //playerPoint = player.GetComponent<Point>();
+        //genScript = generateBoard.GetComponent<GenerateBoard>();
         possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
 
         for (int i= 0; i < moveScores.Length; i++)
@@ -42,6 +43,7 @@ public class Enemy : MonoBehaviour
 
     private static int getScoreNew(GameObject move, GameObject player, GameObject generateBoard)
     {
+        // For outer nodes
         if (move == null) //shouldn't make move
         {
             return 100;
@@ -52,6 +54,8 @@ public class Enemy : MonoBehaviour
         Point pointScript = move.GetComponent<Point>();
         GenerateBoard genScript = generateBoard.GetComponent<GenerateBoard>();
         int score = 0;
+
+        // If node occupied, not a good move
         if(pointScript.isOccupiedBy != null)
         {
             return 100;
