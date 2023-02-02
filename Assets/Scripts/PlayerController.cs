@@ -108,13 +108,20 @@ public class PlayerController : MonoBehaviour
         // Player input
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0) //not a bad sibling
+            if (lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0 && GetLookedAtNode().GetComponent<Point>().isOccupiedBy == null) //not a bad sibling
             {
+                // I ADDED THE BLOCK DETECTION HERE
                 targetNode = GetLookedAtNode();
+                targetNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
+
                 targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
                 currentNode = targetNode;
+                currentNode.GetComponent<Point>().isOccupiedBy = null;
+
                 movesToMake--;
                 movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+
+                // Update isOccupiedBy
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))

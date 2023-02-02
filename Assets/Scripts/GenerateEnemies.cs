@@ -31,6 +31,7 @@ public class GenerateEnemies : MonoBehaviour
                 enemy.player = player;
                 enemy.generateBoard = generateBoard;
                 enemy.entityNode = currentNode;
+                enemy.entityNode.GetComponent<Point>().isOccupiedBy = enemyArray[i];
 
                 // Every other outernode
                 currentNode = currentNode.GetComponent<Point>().sibling.GetComponent<Point>().sibling;
@@ -63,13 +64,17 @@ public class GenerateEnemies : MonoBehaviour
             System.Random rand = new System.Random();
             int numMoved = rand.Next(numEnemies);
 
-            for (int i = 0; i < numMoved; i++)
+            for (int i = 0; i < numMoved; i++) // This is largely likely to make the last enemy not move many times over
             {
                 Enemy enemy = enemyArray[i].GetComponent<Enemy>();
                 enemy.updateMoveScores();
                 int index = System.Array.IndexOf(enemy.moveScores, enemy.moveScores.Min());
 
                 GameObject newNode = enemy.possibleMoves[index];
+                // Update isOccupiedBy
+                newNode.GetComponent<Point>().isOccupiedBy = enemyArray[i];
+                enemy.entityNode.GetComponent<Point>().isOccupiedBy = null;
+
                 enemy.transform.position = newNode.transform.position;
                 enemy.entityNode = newNode;
             }
