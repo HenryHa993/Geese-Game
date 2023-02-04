@@ -70,13 +70,21 @@ public class GenerateEnemies : MonoBehaviour
                 enemy.updateMoveScores();
                 int index = System.Array.IndexOf(enemy.moveScores, enemy.moveScores.Min());
 
-                GameObject newNode = enemy.possibleMoves[index];
-                // Update isOccupiedBy
-                newNode.GetComponent<Point>().isOccupiedBy = enemyArray[i];
-                enemy.entityNode.GetComponent<Point>().isOccupiedBy = null;
+                // enemy.entityNode.GetComponent<Point>().badSibling.GetComponent<Point>().isOccupiedBy != player
+                    GameObject newNode = enemy.possibleMoves[index];
+                    //check if player is there, if so don't move as adjacent
+                    if (newNode.GetComponent<Point>().isOccupiedBy != player)
+                    {
+                        // Update isOccupiedBy
+                        newNode.GetComponent<Point>().isOccupiedBy = enemyArray[i];
+                        enemy.entityNode.GetComponent<Point>().isOccupiedBy = null;
 
-                enemy.transform.position = newNode.transform.position;
-                enemy.entityNode = newNode;
+                        enemy.transform.position = newNode.transform.position;
+                        enemy.entityNode = newNode;
+                    }
+                    
+
+                
             }
             movesMade = true;
         }

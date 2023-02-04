@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
         targetNodeData = targetNode.GetComponent<Point>();
         currentPosition = new Vector3(targetNode.transform.position.x, yValue,targetNode.transform.position.z);
         targetPosition = currentPosition;
+        transform.localPosition = currentPosition;
+        currentNode = targetNode;
+        currentNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
         lookingAtNode = 2;
         lookAtNode();
 
@@ -115,13 +118,15 @@ public class PlayerController : MonoBehaviour
                 targetNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
 
                 targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
-                currentNode = targetNode;
                 currentNode.GetComponent<Point>().isOccupiedBy = null;
+                currentNode = targetNode;
+
 
                 movesToMake--;
                 movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
 
                 // Update isOccupiedBy
+
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
