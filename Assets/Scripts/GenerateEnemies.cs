@@ -8,8 +8,9 @@ public class GenerateEnemies : MonoBehaviour
     public GameObject Enemy, outerLayerNode, player, generateBoard;
     public GameObject[] enemyArray;
     public bool isTurn, movesMade;
-    public int numEnemies = 5, moveDelayInFrames = 100;
+    public int numEnemies = 5, moveDelayInFrames = 100, yValue = 1;
     private int frameCounter;
+    
 
     // Spawn enemies on runtime
     void Start()
@@ -22,7 +23,7 @@ public class GenerateEnemies : MonoBehaviour
             // An enemy on every other outernode
             for (int i = 0; i < numEnemies; i++)
             {
-                Vector3 initPosition = currentNode.transform.position;
+                Vector3 initPosition = new Vector3(currentNode.transform.position.x, yValue, currentNode.transform.position.z);
                 Quaternion initRotation = Quaternion.Euler(0, 0, 0);
 
                 enemyArray[i] = Instantiate(Enemy, initPosition, initRotation);
@@ -89,7 +90,8 @@ public class GenerateEnemies : MonoBehaviour
                 move.MoveToNode.GetComponent<Point>().isOccupiedBy = enemyArray[move.EnemyIndex];
                 enemy.entityNode.GetComponent<Point>().isOccupiedBy = null;
                 //Move
-                enemy.transform.position = move.MoveToNode.transform.position;
+                Vector3 destination = move.MoveToNode.transform.position;
+                enemy.transform.position = new Vector3(destination.x, yValue, destination.z);
                 enemy.entityNode = move.MoveToNode;
             }
             allMoves.Clear();

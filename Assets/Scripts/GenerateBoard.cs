@@ -16,6 +16,10 @@ public class GenerateBoard : MonoBehaviour
 
     private void Awake()
     {
+        origin.GetComponent<Point>().yUpValue = 1;
+        origin.GetComponent<Point>().yDownValue = 1;
+
+
         // Save points in an array
         pointArray = new GameObject[layers, numNodes];
 

@@ -295,6 +295,7 @@ MonoBehaviour:
   movesMade: 0
   numEnemies: 5
   moveDelayInFrames: 100
+  yValue: 1
 --- !u!1 &558174102
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,7 +885,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c837962f026586246af3318badb39ceb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1059,8 +1060,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69744b189309c04b9e93ad0b47c0215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yUpValue: 0
+  yDownValue: -0.2
   layer: 0
   sidePosition: 0
+  isVisible: 0
   child: {fileID: 0}
   parent: {fileID: 0}
   sibling: {fileID: 0}
@@ -1126,7 +1130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963616611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
