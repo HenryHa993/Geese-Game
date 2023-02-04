@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         currentNode = targetNode;
         PointVisibility(true);
         currentNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
-        lookingAtNode = 2;
+        lookingAtNode = 0;
         lookAtNode();
 
         // Set timer
@@ -162,12 +162,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Turn made");
             lookingAtNode = clockwiseLayer ? lookingAtNode + 1 : lookingAtNode - 1;
+            //if(GetLookedAtNode() == null) lookingAtNode = clockwiseLayer ? lookingAtNode - 1 : lookingAtNode + 1;
             if (lookingAtNode <= -1) lookingAtNode = 3;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Debug.Log("Turn made");
             lookingAtNode = clockwiseLayer ? lookingAtNode - 1 : lookingAtNode + 1;
+            //if(GetLookedAtNode() == null) lookingAtNode = clockwiseLayer ? lookingAtNode + 1 : lookingAtNode - 1;
             if (lookingAtNode <= -1) lookingAtNode = 3;
 
         }

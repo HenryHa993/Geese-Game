@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GenerateEnemies : MonoBehaviour
 {
-    public GameObject Enemy, outerLayerNode, player, generateBoard;
+    public GameObject Enemy, innnerLayerNode, player, generateBoard;
     public GameObject[] enemyArray;
     public bool isTurn, movesMade;
     public int numEnemies = 5, moveDelayInFrames = 100, yValue = 1;
@@ -15,10 +15,10 @@ public class GenerateEnemies : MonoBehaviour
     // Spawn enemies on runtime
     void Start()
     {
-        if (!(outerLayerNode == null))
+        if (!(innnerLayerNode == null))
         {
             enemyArray = new GameObject[numEnemies];
-            GameObject currentNode = outerLayerNode;
+            GameObject currentNode = innnerLayerNode;
 
             // An enemy on every other outernode
             for (int i = 0; i < numEnemies; i++)
@@ -93,6 +93,7 @@ public class GenerateEnemies : MonoBehaviour
                 Vector3 destination = move.MoveToNode.transform.position;
                 enemy.transform.position = new Vector3(destination.x, yValue, destination.z);
                 enemy.entityNode = move.MoveToNode;
+                Debug.Log("Move");
             }
             allMoves.Clear();
             movesMade = true;
