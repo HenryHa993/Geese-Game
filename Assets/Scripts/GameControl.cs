@@ -13,7 +13,8 @@ public class GameControl : MonoBehaviour
     public PlayerController playerController;
     public GenerateEnemies enemyController;
 
-    public float timer;
+    
+    public float timer, gameTime = 120;
 
 
     // Initialise game start state, with players move
@@ -46,8 +47,8 @@ public class GameControl : MonoBehaviour
             timer += Time.deltaTime;
             var sayDialog = bloodRain.GetComponent<RectTransform>();
             var pos = sayDialog.anchoredPosition;
-            sayDialog.anchoredPosition = new Vector2(pos.x, pos.y - Time.deltaTime);
-            if (timer >= 120f) //game time 2mins
+            sayDialog.anchoredPosition = new Vector2(pos.x, 500 - (timer * (Screen.height/gameTime))); //660 places
+            if (timer >= gameTime) //game time 2mins
             {
                 gameOver = true;
             }
@@ -104,6 +105,13 @@ public class GameControl : MonoBehaviour
             {
                 gameOver = true;
             }
+        }else
+        {
+            playerController.movesToMake = 0;
+
+            var sayDialog = bloodRain.GetComponent<RectTransform>();
+            var pos = sayDialog.anchoredPosition;
+            sayDialog.anchoredPosition = new Vector2(pos.x, 500-Screen.height); //660 places
         }
 
     }
