@@ -1136,7 +1136,7 @@ GameObject:
   - component: {fileID: 1319376709}
   - component: {fileID: 1319376712}
   m_Layer: 0
-  m_Name: Floor Plane
+  m_Name: Blood River
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1234,8 +1234,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClockwise: 0
-  speed: 0
+  speed: 0.1
   playerPoint: {fileID: 1726790534}
+  height: {x: 0, y: 0.15, z: 0}
+  origin: {x: 0, y: 0, z: 0}
+  riseSpeed: 0.03
 --- !u!1 &1477598346
 GameObject:
   m_ObjectHideFlags: 0

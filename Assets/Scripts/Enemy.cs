@@ -78,12 +78,12 @@ public class Enemy : MonoBehaviour
         // If move is infact going to centre
         if(move.transform.CompareTag("Origin"))
         {
-            Debug.Log("Don't go into centre :0");
+            //Debug.Log("Don't go into centre :0");
             return 100000;
         }
 
         // Return score as a magnitude
-        return (int)Mathf.RoundToInt((player.transform.position - move.transform.position).magnitude);
+        return (int)Mathf.RoundToInt((player.transform.position - move.transform.position).magnitude * 100);
 
         // Calculate score
         // Count layer difference (take positive)

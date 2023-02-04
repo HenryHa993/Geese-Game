@@ -166,14 +166,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Debug.Log("Turn made");
+            //Debug.Log("Turn made");
             lookingAtNode = clockwiseLayer ? lookingAtNode + 1 : lookingAtNode - 1;
             //if(GetLookedAtNode() == null) lookingAtNode = clockwiseLayer ? lookingAtNode - 1 : lookingAtNode + 1;
             if (lookingAtNode <= -1) lookingAtNode = 3;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Debug.Log("Turn made");
+            //Debug.Log("Turn made");
             lookingAtNode = clockwiseLayer ? lookingAtNode - 1 : lookingAtNode + 1;
             //if(GetLookedAtNode() == null) lookingAtNode = clockwiseLayer ? lookingAtNode + 1 : lookingAtNode - 1;
             if (lookingAtNode <= -1) lookingAtNode = 3;
