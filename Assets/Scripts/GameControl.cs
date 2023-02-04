@@ -31,6 +31,8 @@ public class GameControl : MonoBehaviour
         enemyController.movesMade = false;
         key.GetComponent<Key>().isCollected = false;
         keyIcon.SetActive(false);
+        bloodRain.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Screen.height);
+
         timer = 0;
     }
 
@@ -47,7 +49,7 @@ public class GameControl : MonoBehaviour
             timer += Time.deltaTime;
             var sayDialog = bloodRain.GetComponent<RectTransform>();
             var pos = sayDialog.anchoredPosition;
-            sayDialog.anchoredPosition = new Vector2(pos.x, 500 - (timer * (Screen.height/gameTime))); //660 places
+            sayDialog.anchoredPosition = new Vector2(pos.x, (Screen.height/2) - (timer * (Screen.height/gameTime))); //660 places
             if (timer >= gameTime) //game time 2mins
             {
                 gameOver = true;
@@ -111,7 +113,7 @@ public class GameControl : MonoBehaviour
 
             var sayDialog = bloodRain.GetComponent<RectTransform>();
             var pos = sayDialog.anchoredPosition;
-            sayDialog.anchoredPosition = new Vector2(pos.x, 500-Screen.height); //660 places
+            sayDialog.anchoredPosition = new Vector2(pos.x, (Screen.height/2)-Screen.height); //660 places
         }
 
     }

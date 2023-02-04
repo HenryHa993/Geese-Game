@@ -392,7 +392,7 @@ MonoBehaviour:
   isTurn: 0
   movesMade: 0
   numEnemies: 5
-  moveDelayInFrames: 100
+  moveDelayInFrames: 10
   yValue: 1
 --- !u!1 &558174102
 GameObject:
