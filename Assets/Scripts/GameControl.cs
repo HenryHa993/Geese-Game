@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
-    public GameObject enemies, player, key, origin;
+    public GameObject enemies, player, key, origin, keyIcon, gameWonIcon;
     public int playerMovesThisTurn = 2;
     public bool isPlayersTurn, gameWon;
 
@@ -25,6 +25,7 @@ public class GameControl : MonoBehaviour
         playerController.movesToMake = playerMovesThisTurn;
         enemyController.movesMade = false;
         key.GetComponent<Key>().isCollected = false;
+        keyIcon.SetActive(false);
     }
 
     // Swaps turns as turns are made
@@ -40,6 +41,9 @@ public class GameControl : MonoBehaviour
 
         playerController.isTurn = isPlayersTurn;
         enemyController.isTurn = !isPlayersTurn;
+
+        keyIcon.SetActive(key.GetComponent<Key>().isCollected);
+        gameWonIcon.SetActive(gameWon);
 
         if (origin.GetComponent<Point>().isOccupiedBy == player && key.GetComponent<Key>().isCollected)
         {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject currentNode, targetNode;
+    public GameObject currentNode, targetNode, key;
     public Text movesLeftText;
     public float playerSpeed;
     public int movesToMake;
@@ -137,24 +137,30 @@ public class PlayerController : MonoBehaviour
         // Player input
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            
             if (lookingAtNode % 4 != 3 && GetLookedAtNode() != null && movesToMake != 0 && GetLookedAtNode().GetComponent<Point>().isOccupiedBy == null) //not a bad sibling
             {
-                // I ADDED THE BLOCK DETECTION HERE
-                targetNode = GetLookedAtNode();
-                targetNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
+                //move.transform.CompareTag("Origin")
+                if ((GetLookedAtNode().transform.CompareTag("Origin") && key.GetComponent<Key>().isCollected) || !GetLookedAtNode().transform.CompareTag("Origin"))
+                {
+                    // I ADDED THE BLOCK DETECTION HERE
+                    targetNode = GetLookedAtNode();
+                    targetNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
 
-                targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
-                currentNode.GetComponent<Point>().isOccupiedBy = null;
-                PointVisibility(false);
-                currentNode = targetNode;
-                PointVisibility(true);
+                    targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
+                    currentNode.GetComponent<Point>().isOccupiedBy = null;
+                    PointVisibility(false);
+                    currentNode = targetNode;
+                    PointVisibility(true);
 
 
 
-                movesToMake--;
-                movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+                    movesToMake--;
+                    movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
 
-                // Update isOccupiedBy
+                    // Update isOccupiedBy
+                }
+                
 
             }
         }
