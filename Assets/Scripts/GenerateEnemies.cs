@@ -6,6 +6,7 @@ using UnityEngine;
 public class GenerateEnemies : MonoBehaviour
 {
     public GameObject Enemy, innnerLayerNode, player, generateBoard;
+    public AudioSource gooseHonk;
     public GameObject[] enemyArray;
     public bool isTurn, movesMade;
     public int numEnemies = 5, moveDelayInFrames = 100, yValue = 1;
@@ -134,6 +135,10 @@ public class GenerateEnemies : MonoBehaviour
         else
         {
             frameCounter++;
+            if(frameCounter == 10)
+            {
+                gooseHonk.Play();
+            }
         }
 
     }
