@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         targetPosition = currentPosition;
         transform.localPosition = currentPosition;
         currentNode = targetNode;
+        PointVisibility(true);
         currentNode.GetComponent<Point>().isOccupiedBy = transform.gameObject;
         lookingAtNode = 2;
         lookAtNode();
@@ -96,6 +97,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //called when moving
+    private void PointVisibility(bool isShown)
+    {
+        Point currentPoint = currentNode.GetComponent<Point>();
+        //hide current node connected
+        //currentNode.SetActive(isShown);
+        currentPoint.isVisible = isShown;
+        if (currentPoint.sibling != null)
+        {
+            //currentPoint.sibling.GetComponent<Point>().isVisible = true;
+            //currentPoint.sibling.SetActive(isShown);
+            currentPoint.sibling.GetComponent<Point>().isVisible = isShown;
+        }
+        if (currentPoint.parent != null)
+        {
+            //currentPoint.parent.SetActive(isShown);
+            currentPoint.parent.GetComponent<Point>().isVisible = isShown;
+        }
+        if (currentPoint.child != null)
+        {
+            //currentPoint.child.SetActive(isShown);
+            currentPoint.child.GetComponent<Point>().isVisible = isShown;
+        }
+    }
+
     public void lookAtNode()
     {
         var p1 = transform.position;
@@ -119,7 +145,10 @@ public class PlayerController : MonoBehaviour
 
                 targetPosition = new Vector3(targetNode.transform.position.x, yValue, targetNode.transform.position.z);
                 currentNode.GetComponent<Point>().isOccupiedBy = null;
+                PointVisibility(false);
                 currentNode = targetNode;
+                PointVisibility(true);
+
 
 
                 movesToMake--;

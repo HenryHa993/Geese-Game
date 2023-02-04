@@ -35,6 +35,8 @@ public class GenerateBoard : MonoBehaviour
                 // Adding instantiated object to multidimensional array
                 pointArray[j - 1, i] = Instantiate(point, pos, rot);
                 pointArray[j - 1, i].GetComponent<Point>().layer = j;
+                pointArray[j - 1, i].GetComponent<Point>().isVisible = false;
+                //pointArray[j - 1, i].SetActive(false);
             }
         }
 
