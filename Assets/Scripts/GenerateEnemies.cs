@@ -57,7 +57,7 @@ public class GenerateEnemies : MonoBehaviour
         if (frameCounter >= moveDelayInFrames)
         {
             frameCounter = 0;
-            List<MoveLogic> allMoves = new List<MoveLogic>();
+            List<MoveLogic> allMoves = new List<MoveLogic>(); // Saves best move for each enemy
             //find minScores and associated move for each player, add to list if they don't move into player
             for (int i = 0; i < numEnemies; i++)
             {
@@ -79,7 +79,7 @@ public class GenerateEnemies : MonoBehaviour
 
             //select random amount to move
             System.Random rand = new System.Random();
-            int numMoved = rand.Next(numEnemies);
+            int numMoved = rand.Next(allMoves.Count); // Its not dtoring it.
 
             //make those moves
             for (int i = 0; i < numMoved; i++)

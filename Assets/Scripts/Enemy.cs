@@ -37,11 +37,11 @@ public class Enemy : MonoBehaviour
 
         for (int i= 0; i < moveScores.Length; i++)
         {
-            moveScores[i] = getScoreNew(possibleMoves[i], player, generateBoard);
+            moveScores[i] = getScoreNew(possibleMoves[i], player, generateBoard, transform.gameObject);
         }
     }
 
-    private static int getScoreNew(GameObject move, GameObject player, GameObject generateBoard)
+    private static int getScoreNew(GameObject move, GameObject player, GameObject generateBoard, GameObject enemy)
     {
 
         // Prevents impossible moves on outer nodes
@@ -57,6 +57,17 @@ public class Enemy : MonoBehaviour
         GenerateBoard genScript = generateBoard.GetComponent<GenerateBoard>();
         //int score = 0;
 
+        // If blocking
+        if (move == playerController.currentNode)
+        {
+            enemy.GetComponent<Enemy>().isBlocking = true;
+            return 100000;
+        }
+
+        if (enemy.GetComponent<Enemy>().isBlocking)
+        {
+            return 100000;
+        }
 
         // If node occupied, not a good move
         if (pointScript.isOccupiedBy != null)
