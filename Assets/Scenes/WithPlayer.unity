@@ -1275,7 +1275,7 @@ MonoBehaviour:
   keyIcon: {fileID: 751250868}
   gameWonIcon: {fileID: 1002530686}
   gameOverIcon: {fileID: 1315306208}
-  playerMovesThisTurn: 1
+  playerMovesThisTurn: 3
   isPlayersTurn: 0
   gameWon: 0
   gameOver: 0
