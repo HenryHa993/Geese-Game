@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
-    public GameObject enemies, player, key, origin, keyIcon, gameWonIcon;
+    public GameObject enemies, player, key, origin, keyIcon, gameWonIcon, gameOverIcon;
     public int playerMovesThisTurn = 2;
-    public bool isPlayersTurn, gameWon;
+    public bool isPlayersTurn, gameWon, gameOver;
 
     public PlayerController playerController;
     public GenerateEnemies enemyController;
@@ -18,6 +18,7 @@ public class GameControl : MonoBehaviour
     {
         isPlayersTurn = true;
         gameWon = false;
+        gameOver = false;
 
         playerController = player.GetComponent<PlayerController>();
         enemyController = enemies.GetComponent<GenerateEnemies>();
@@ -44,6 +45,8 @@ public class GameControl : MonoBehaviour
 
         keyIcon.SetActive(key.GetComponent<Key>().isCollected);
         gameWonIcon.SetActive(gameWon);
+        gameOverIcon.SetActive(gameOver);
+
 
         if (origin.GetComponent<Point>().isOccupiedBy == player && key.GetComponent<Key>().isCollected)
         {
