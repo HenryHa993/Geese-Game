@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class GenerateBoard : MonoBehaviour
 {
-    public GameObject origin;
+    public GameObject origin, key;
     public GameObject point, player, enemies;
 
-    public int layers = 1;
+    public int layers = 1, keyYHeight = 1;
     public int numNodes = 4;
     public float radius = 5f;
 
@@ -43,6 +43,14 @@ public class GenerateBoard : MonoBehaviour
                 //pointArray[j - 1, i].SetActive(false);
             }
         }
+
+        //move key
+        System.Random rnd = new System.Random();
+        int layerPos =  rnd.Next(layers);
+        int pointsPerLayerPos =rnd.Next(numNodes);
+        GameObject KeyPoint = pointArray[layerPos, pointsPerLayerPos];
+        key.transform.position = new Vector3(KeyPoint.transform.position.x, keyYHeight,KeyPoint.transform.position.z);
+        key.GetComponent<Key>().Point = KeyPoint;
 
         //Debug.Log(pointArray);
         //Print2DArray(pointArray);

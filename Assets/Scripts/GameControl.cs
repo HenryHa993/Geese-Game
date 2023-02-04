@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
-    public GameObject enemies, player;
+    public GameObject enemies, player, key, origin;
     public int playerMovesThisTurn = 2;
-    public bool isPlayersTurn;
+    public bool isPlayersTurn, gameWon;
 
     public PlayerController playerController;
     public GenerateEnemies enemyController;
@@ -17,12 +17,14 @@ public class GameControl : MonoBehaviour
     void Start()
     {
         isPlayersTurn = true;
+        gameWon = false;
 
         playerController = player.GetComponent<PlayerController>();
         enemyController = enemies.GetComponent<GenerateEnemies>();
 
         playerController.movesToMake = playerMovesThisTurn;
         enemyController.movesMade = false;
+        key.GetComponent<Key>().isCollected = false;
     }
 
     // Swaps turns as turns are made
@@ -38,5 +40,10 @@ public class GameControl : MonoBehaviour
 
         playerController.isTurn = isPlayersTurn;
         enemyController.isTurn = !isPlayersTurn;
+
+        if (origin.GetComponent<Point>().isOccupiedBy == player && key.GetComponent<Key>().isCollected)
+        {
+            gameWon = true;
+        }
     }
 }
