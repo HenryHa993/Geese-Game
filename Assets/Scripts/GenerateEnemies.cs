@@ -79,7 +79,9 @@ public class GenerateEnemies : MonoBehaviour
 
             //select random amount to move
             System.Random rand = new System.Random();
-            int numMoved = rand.Next(allMoves.Count); // Its not dtoring it.
+            int numMoved = rand.Next(allMoves.Count); // Its not dtoring it.]
+            Debug.Log("Amount of moves legal: " + allMoves.Count);
+            Debug.Log("Geese moved: " + numMoved);
 
             //make those moves
             for (int i = 0; i < numMoved; i++)
@@ -93,7 +95,7 @@ public class GenerateEnemies : MonoBehaviour
                 Vector3 destination = move.MoveToNode.transform.position;
                 enemy.transform.position = new Vector3(destination.x, yValue, destination.z);
                 enemy.entityNode = move.MoveToNode;
-                Debug.Log("Move");
+                //Debug.Log("Move");
             }
             allMoves.Clear();
             movesMade = true;
