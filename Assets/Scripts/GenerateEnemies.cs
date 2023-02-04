@@ -27,7 +27,7 @@ public class GenerateEnemies : MonoBehaviour
                 Quaternion initRotation = Quaternion.Euler(0, 0, 0);
 
                 enemyArray[i] = Instantiate(Enemy, initPosition, initRotation);
-
+                enemyArray[i].tag = "Enemy";
                 Enemy enemy = enemyArray[i].GetComponent<Enemy>();
                 enemy.player = player;
                 enemy.generateBoard = generateBoard;
@@ -79,7 +79,14 @@ public class GenerateEnemies : MonoBehaviour
 
             //select random amount to move
             System.Random rand = new System.Random();
-            int numMoved = rand.Next(allMoves.Count); // Its not dtoring it.]
+            int numMoved = 0;
+            if (allMoves.Count > 2)
+            {
+                numMoved = rand.Next(2, allMoves.Count);
+            }else if(allMoves.Count > 1)
+            {
+                numMoved = rand.Next(allMoves.Count);
+            }
             Debug.Log("Amount of moves legal: " + allMoves.Count);
             Debug.Log("Geese moved: " + numMoved);
 
