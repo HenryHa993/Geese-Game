@@ -45,10 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69744b189309c04b9e93ad0b47c0215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yUpValue: 0
+  yDownValue: -0.4
   layer: 0
+  sidePosition: 0
+  isVisible: 0
   child: {fileID: 0}
   parent: {fileID: 0}
   sibling: {fileID: 0}
+  badSibling: {fileID: 0}
+  isOccupiedBy: {fileID: 0}
 --- !u!1 &6636885956491608713
 GameObject:
   m_ObjectHideFlags: 0
