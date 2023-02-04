@@ -19,6 +19,7 @@ public class Key : MonoBehaviour
         if (Point.GetComponent<Point>().isOccupiedBy == player)
         {
             isCollected = true;
+            transform.gameObject.SetActive(false);
         }
     }
 }

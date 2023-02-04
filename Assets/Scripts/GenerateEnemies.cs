@@ -75,7 +75,7 @@ public class GenerateEnemies : MonoBehaviour
             //reorder list randomly
             allMoves.Shuffle<MoveLogic>();
             //reorder list by lowest score
-            allMoves = allMoves.OrderByDescending(m => m.Score).ToList();
+            allMoves = allMoves.OrderBy(m => m.Score).ToList();
 
             //select random amount to move
             System.Random rand = new System.Random();
