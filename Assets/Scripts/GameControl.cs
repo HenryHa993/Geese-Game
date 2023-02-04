@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
-    public GameObject enemies, player, key, origin, keyIcon, gameWonIcon, gameOverIcon;
+    public GameObject enemies, player, key, origin, keyIcon, gameWonIcon, gameOverIcon, bloodRain;
     public int playerMovesThisTurn = 2;
     public bool isPlayersTurn, gameWon, gameOver;
 
     public PlayerController playerController;
     public GenerateEnemies enemyController;
+
+    public float timer;
+
 
     // Initialise game start state, with players move
     void Start()
@@ -27,15 +30,28 @@ public class GameControl : MonoBehaviour
         enemyController.movesMade = false;
         key.GetComponent<Key>().isCollected = false;
         keyIcon.SetActive(false);
+        timer = 0;
     }
+
+    
 
     // Swaps turns as turns are made
     void Update()
     {
+
         gameWonIcon.SetActive(gameWon);
         gameOverIcon.SetActive(gameOver && !gameWon);
         if (!gameOver)
         {
+            timer += Time.deltaTime;
+            var sayDialog = bloodRain.GetComponent<RectTransform>();
+            var pos = sayDialog.anchoredPosition;
+            sayDialog.anchoredPosition = new Vector2(pos.x, pos.y - Time.deltaTime);
+            if (timer >= 120f) //game time 2mins
+            {
+                gameOver = true;
+            }
+            
             if (enemyController.movesMade)
             {
                 enemyController.movesMade = false;

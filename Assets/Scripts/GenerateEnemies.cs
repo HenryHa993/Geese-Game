@@ -66,7 +66,7 @@ public class GenerateEnemies : MonoBehaviour
                 int bestScore = enemy.moveScores.Min();
                 int index = System.Array.IndexOf(enemy.moveScores, bestScore);
                 GameObject bestMoveToNode = enemy.possibleMoves[index];
-                if(bestMoveToNode.GetComponent<Point>().isOccupiedBy != player && bestScore < 100000)
+                if(bestMoveToNode.GetComponent<Point>().isOccupiedBy != player && bestScore < 100000 && !allMoves.DoesItContainMove(bestMoveToNode))
                 {
                     allMoves.Add(new MoveLogic(bestScore, bestMoveToNode, i));
                 }
@@ -80,12 +80,9 @@ public class GenerateEnemies : MonoBehaviour
             //select random amount to move
             System.Random rand = new System.Random();
             int numMoved = 0;
-            if (allMoves.Count > 2)
+            if(allMoves.Count > 1)
             {
-                numMoved = rand.Next(2, allMoves.Count);
-            }else if(allMoves.Count > 1)
-            {
-                numMoved = rand.Next(allMoves.Count);
+                numMoved = rand.Next(1, allMoves.Count);
             }
             Debug.Log("Amount of moves legal: " + allMoves.Count);
             Debug.Log("Geese moved: " + numMoved);
@@ -172,5 +169,20 @@ static class ShuffleLogic
             list[k] = list[n];
             list[n] = value;
         }
+    }
+
+    public static bool DoesItContainMove(this IList<MoveLogic> list, GameObject MoveToNode) 
+    {
+        bool doesContain = false;
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].MoveToNode == MoveToNode)
+            {
+                doesContain = true;
+                break;
+            }
+        }
+        
+        return doesContain;
     }
 }
