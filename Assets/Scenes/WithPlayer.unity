@@ -1271,9 +1271,11 @@ MonoBehaviour:
   origin: {fileID: 1963616611}
   keyIcon: {fileID: 751250868}
   gameWonIcon: {fileID: 1002530686}
+  gameOverIcon: {fileID: 1315306208}
   playerMovesThisTurn: 1
   isPlayersTurn: 0
   gameWon: 0
+  gameOver: 0
   playerController: {fileID: 0}
   enemyController: {fileID: 0}
 --- !u!4 &1477598348
