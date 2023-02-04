@@ -32,6 +32,8 @@ public class GameControl : MonoBehaviour
     // Swaps turns as turns are made
     void Update()
     {
+        gameWonIcon.SetActive(gameWon);
+        gameOverIcon.SetActive(gameOver && !gameWon);
         if (!gameOver)
         {
             if (enemyController.movesMade)
@@ -46,8 +48,7 @@ public class GameControl : MonoBehaviour
             enemyController.isTurn = !isPlayersTurn;
 
             keyIcon.SetActive(key.GetComponent<Key>().isCollected);
-            gameWonIcon.SetActive(gameWon);
-            gameOverIcon.SetActive(gameOver);
+
 
 
             if (origin.GetComponent<Point>().isOccupiedBy == player && key.GetComponent<Key>().isCollected)
