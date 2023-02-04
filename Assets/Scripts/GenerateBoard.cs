@@ -68,6 +68,7 @@ public class GenerateBoard : MonoBehaviour
                     pointArray[j - 1, i].GetComponent<Point>().parent = origin;
                     pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
                     pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
+                    pointArray[j - 1, i].GetComponent<Point>().isClockwise = true;
 
                     if (i == 0)
                     {
@@ -99,6 +100,7 @@ public class GenerateBoard : MonoBehaviour
                     {
                         pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
                         pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
+                        pointArray[j - 1, i].GetComponent<Point>().isClockwise = true;
 
                         if (i == 0)
                         {
@@ -128,16 +130,22 @@ public class GenerateBoard : MonoBehaviour
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = true;
+
                         }
                         else if (i == numNodes - 1)
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Same layer, end of array
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, 0];
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = true;
+
                         }
                         else
                         {
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i - 1]; // Point on left
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i + 1]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = true;
+
                         }
                     }
                 }
@@ -158,22 +166,27 @@ public class GenerateBoard : MonoBehaviour
                         {
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, numNodes - 1]; // Same layer, end of array
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1];
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = false;
+
                         }
                         else if (i == numNodes - 1)
                         {
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Same layer, end of array
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, 0]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = false;
                         }
                         else
                         {
                             pointArray[j - 1, i].GetComponent<Point>().badSibling = pointArray[j - 1, i - 1]; // Point on left
                             pointArray[j - 1, i].GetComponent<Point>().sibling = pointArray[j - 1, i + 1]; // Point on left
+                            pointArray[j - 1, i].GetComponent<Point>().isClockwise = false;
                         }
                     }
                     else // Mid layer
                     {
                         pointArray[j - 1, i].GetComponent<Point>().child = pointArray[j, i]; // Next layer, same position in second dimension
                         pointArray[j, i].GetComponent<Point>().parent = pointArray[j - 1, i]; // This node is parent of its child
+                        pointArray[j - 1, i].GetComponent<Point>().isClockwise = false;
 
                         if (i == 0)
                         {
