@@ -25,18 +25,26 @@ public class Enemy : MonoBehaviour
     // Initialise scores, larger scores are worse.
     public void updateMoveScores()
     {
-/*        foreach (GameObject move in possibleMoves)
-        {
+        /*        foreach (GameObject move in possibleMoves)
+                {
 
-        }*/
+                }*/
+        //isBlocking = false;
 
-        moveScores = new int[3]{ 100000, 100000, 100000 };
+        moveScores = new int[4]{ 100000, 100000, 100000 , 100000};
         //playerPoint = player.GetComponent<Point>();
         //genScript = generateBoard.GetComponent<GenerateBoard>();
-        possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
+        possibleMoves = new GameObject[4]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling, entityNode.GetComponent<Point>().badSibling };
 
         for (int i= 0; i < moveScores.Length; i++)
         {
+            // If blocking
+            if (possibleMoves[i] == player.GetComponent<PlayerController>().currentNode)
+            {
+                moveScores = new int[4] { 100000, 100000, 100000, 100000 };
+                return;
+            }
+
             moveScores[i] = getScoreNew(possibleMoves[i], player, generateBoard, transform.gameObject);
         }
     }
@@ -56,18 +64,6 @@ public class Enemy : MonoBehaviour
         Point pointScript = move.GetComponent<Point>();
         GenerateBoard genScript = generateBoard.GetComponent<GenerateBoard>();
         //int score = 0;
-
-        // If blocking
-        if (move == playerController.currentNode)
-        {
-            enemy.GetComponent<Enemy>().isBlocking = true;
-            return 100000;
-        }
-
-        if (enemy.GetComponent<Enemy>().isBlocking)
-        {
-            return 100000;
-        }
 
         // If node occupied, not a good move
         if (pointScript.isOccupiedBy != null)
