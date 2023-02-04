@@ -240,7 +240,7 @@ MonoBehaviour:
   point: {fileID: 2951005293857694701, guid: b6815e2ba9ef2a744a5885547c9f9c5f, type: 3}
   player: {fileID: 1726790533}
   enemies: {fileID: 351760279}
-  layers: 4
+  layers: 8
   keyYHeight: 1
   numNodes: 10
   radius: 2
