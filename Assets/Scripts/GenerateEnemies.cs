@@ -66,7 +66,7 @@ public class GenerateEnemies : MonoBehaviour
                 int bestScore = enemy.moveScores.Min();
                 int index = System.Array.IndexOf(enemy.moveScores, bestScore);
                 GameObject bestMoveToNode = enemy.possibleMoves[index];
-                if(bestMoveToNode.GetComponent<Point>().isOccupiedBy != player)
+                if(bestMoveToNode.GetComponent<Point>().isOccupiedBy != player && bestScore < 100000)
                 {
                     allMoves.Add(new MoveLogic(bestScore, bestMoveToNode, i));
                 }

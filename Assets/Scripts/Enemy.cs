@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
 
         }*/
 
-        moveScores = new int[3]{100, 100, 100};
+        moveScores = new int[3]{ 100000, 100000, 100000 };
         //playerPoint = player.GetComponent<Point>();
         //genScript = generateBoard.GetComponent<GenerateBoard>();
         possibleMoves = new GameObject[3]{entityNode.GetComponent<Point>().parent, entityNode.GetComponent<Point>().child, entityNode.GetComponent<Point>().sibling};
@@ -43,63 +43,75 @@ public class Enemy : MonoBehaviour
 
     private static int getScoreNew(GameObject move, GameObject player, GameObject generateBoard)
     {
-        // For outer nodes
-        if (move == null) //shouldn't make move
-        {
-            return 100;
-        } 
 
+        // Prevents impossible moves on outer nodes
+        if (move == null)
+        {
+            return 100000;
+        }
+
+        // New scoring system :)
         PlayerController playerController = player.GetComponent<PlayerController>();
         Point playerPoint = playerController.currentNode.GetComponent<Point>();
         Point pointScript = move.GetComponent<Point>();
         GenerateBoard genScript = generateBoard.GetComponent<GenerateBoard>();
-        int score = 0;
+        //int score = 0;
+
 
         // If node occupied, not a good move
-        if(pointScript.isOccupiedBy != null)
+        if (pointScript.isOccupiedBy != null)
         {
-            return 100;
+            return 100000;
         }
-        
 
-        
+        // If move is infact going to centre
+        if(move.transform.CompareTag("Origin"))
+        {
+            Debug.Log("Don't go into centre :0");
+            return 100000;
+        }
+
+        // Return score as a magnitude
+        return (int)Mathf.RoundToInt((player.transform.position - move.transform.position).magnitude);
+
         // Calculate score
         // Count layer difference (take positive)
-        if(pointScript.layer < playerPoint.layer)
-        {
-            score += playerPoint.layer - pointScript.layer;
-        }
-        else
-        {
-            score += pointScript.layer - playerPoint.layer;
-        }
+        /*        if(pointScript.layer < playerPoint.layer)
+                {
+                    score += playerPoint.layer - pointScript.layer;
+                }
+                else
+                {
+                    score += pointScript.layer - playerPoint.layer;
+                }
 
 
-        // Count number of side turns
-        if(pointScript.sidePosition > genScript.numNodes / 2 && playerPoint.sidePosition > genScript.numNodes / 2)
-        {
-            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
-        }
-        else if (pointScript.sidePosition < genScript.numNodes / 2 && playerPoint.sidePosition < genScript.numNodes / 2)
-        {
-            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
-        }
-        else if (pointScript.sidePosition - playerPoint.sidePosition > genScript.numNodes / 2)
-        {
-            score += pointScript.sidePosition - (playerPoint.sidePosition + genScript.numNodes / 2);
-        }
-        else if (pointScript.sidePosition - playerPoint.sidePosition < - genScript.numNodes / 2)
-        {
-            score += pointScript.sidePosition - (playerPoint.sidePosition - genScript.numNodes / 2);
-        }
-        else
-        {
-            score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
-        }
+                // Count number of side turns
+                if(pointScript.sidePosition > genScript.numNodes / 2 && playerPoint.sidePosition > genScript.numNodes / 2)
+                {
+                    score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
+                }
+                else if (pointScript.sidePosition < genScript.numNodes / 2 && playerPoint.sidePosition < genScript.numNodes / 2)
+                {
+                    score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
+                }
+                else if (pointScript.sidePosition - playerPoint.sidePosition > genScript.numNodes / 2)
+                {
+                    score += pointScript.sidePosition - (playerPoint.sidePosition + genScript.numNodes / 2);
+                }
+                else if (pointScript.sidePosition - playerPoint.sidePosition < - genScript.numNodes / 2)
+                {
+                    score += pointScript.sidePosition - (playerPoint.sidePosition - genScript.numNodes / 2);
+                }
+                else
+                {
+                    score += Mathf.Abs(pointScript.sidePosition - playerPoint.sidePosition);
+                }
 
 
-        return score;
-    } 
+                return score;
+        */
+    }
 
-    
+
 }
