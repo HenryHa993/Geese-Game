@@ -13,11 +13,10 @@ public class GameControl : MonoBehaviour
     public PlayerController playerController;
     public GenerateEnemies enemyController;
 
-    
-    public float timer, gameTime = 120;
+    public float timer, gameTime = 90f;
+    public float tick = 1f;
 
-
-    // Initialise game start state, with players move
+    // Setting initial game state
     void Start()
     {
         isPlayersTurn = true;
@@ -41,12 +40,12 @@ public class GameControl : MonoBehaviour
     // Swaps turns as turns are made
     void Update()
     {
-
         gameWonIcon.SetActive(gameWon);
         gameOverIcon.SetActive(gameOver && !gameWon);
+
         if (!gameOver)
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * tick;
             var sayDialog = bloodRain.GetComponent<RectTransform>();
             var pos = sayDialog.anchoredPosition;
             sayDialog.anchoredPosition = new Vector2(pos.x, (Screen.height/2) - (timer * (Screen.height/gameTime))); //660 places
@@ -77,37 +76,46 @@ public class GameControl : MonoBehaviour
 
             //game over check
             Point playerNode = player.GetComponent<PlayerController>().currentNode.GetComponent<Point>();
-            int gameOverPoints = 0;
-            //playerNode adjacent has goose or is null
-            if (playerNode.parent == null)
+            /*            int gameOverPoints = 0;
+                        //playerNode adjacent has goose or is null
+                        if (playerNode.parent == null)
+                        {
+                            gameOverPoints++;
+                        }else if (playerNode.parent.transform.CompareTag("Enemy"))
+                        {
+                            gameOverPoints++;
+                        }
+
+                        if (playerNode.child == null)
+                        {
+                            gameOverPoints++;
+                        }else if (playerNode.child.transform.CompareTag("Enemy"))
+                        {
+                            gameOverPoints++;
+                        }
+
+                        if (playerNode.sibling == null)
+                        {
+                            gameOverPoints++;
+                        }else if (playerNode.sibling.transform.CompareTag("Enemy"))
+                        {
+                            gameOverPoints++;
+                        }
+
+                        if (gameOverPoints >= 3)
+                        {
+                            gameOver = true;
+                        }
+            */
+            // Game loss makes timer faster. So you can stare at your death.
+            if (!gameWon && playerNode.sibling.GetComponent<Point>().isOccupiedBy != null && playerNode.parent.GetComponent<Point>().isOccupiedBy != null && playerNode.child.GetComponent<Point>().isOccupiedBy != null)
             {
-                gameOverPoints++;
-            }else if (playerNode.parent.transform.CompareTag("Enemy"))
-            {
-                gameOverPoints++;
+                //Debug.Log("Game Over :)");
+                tick = 5f;
             }
 
-            if (playerNode.child == null)
-            {
-                gameOverPoints++;
-            }else if (playerNode.child.transform.CompareTag("Enemy"))
-            {
-                gameOverPoints++;
-            }
-
-            if (playerNode.sibling == null)
-            {
-                gameOverPoints++;
-            }else if (playerNode.sibling.transform.CompareTag("Enemy"))
-            {
-                gameOverPoints++;
-            }
-
-            if (gameOverPoints >= 3)
-            {
-                gameOver = true;
-            }
-        }else
+        }
+        else
         {
             playerController.movesToMake = 0;
 

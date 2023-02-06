@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public GameObject currentNode, targetNode, key;
-    public Text movesLeftText;
+    //public Text movesLeftText;
     public float playerSpeed;
     public int movesToMake;
     public bool isTurn;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             else if(isTurn)
             {
                 // UI
-                movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+                //movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
 
                 timer = 0;
 
@@ -127,6 +127,9 @@ public class PlayerController : MonoBehaviour
         var p1 = transform.position;
         var p2 = GetLookedAtNode().transform.position;
         var position = new Vector3(p2.x, p1.y, p2.z); // does not bend to target
+        //Quaternion rot = Quaternion.LookRotation(position - transform.position);
+        //Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
+
         transform.LookAt(position);
     }
 
@@ -156,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
 
                     movesToMake--;
-                    movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
+                    //movesLeftText.text = String.Concat("Moves: ", Convert.ToString(movesToMake));
 
                     // Update isOccupiedBy
                 }

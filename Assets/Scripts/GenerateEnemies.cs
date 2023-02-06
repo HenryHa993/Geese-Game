@@ -85,8 +85,8 @@ public class GenerateEnemies : MonoBehaviour
             {
                 numMoved = rand.Next(1, allMoves.Count);
             }
-            Debug.Log("Amount of moves legal: " + allMoves.Count);
-            Debug.Log("Geese moved: " + numMoved);
+            //Debug.Log("Amount of moves legal: " + allMoves.Count);
+            //Debug.Log("Geese moved: " + numMoved);
 
             //make those moves
             for (int i = 0; i < numMoved; i++)
